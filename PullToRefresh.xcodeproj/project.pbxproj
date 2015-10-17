@@ -270,7 +270,7 @@
 		C7D1CF87199BB3C8009FD485 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Josip Cavar";
 				TargetAttributes = {
 					C7AC6CCB19A7FE6D007107DF = {

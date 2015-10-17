@@ -39,7 +39,7 @@ public class PullToRefreshView: UIView {
     private var scrollViewBouncesDefaultValue: Bool = false
     private var scrollViewInsetsDefaultValue: UIEdgeInsets = UIEdgeInsetsZero
     
-    private let animationOptions: UIViewAnimationOptions = (.AllowAnimatedContent | .BeginFromCurrentState)
+    private let animationOptions: UIViewAnimationOptions = [.AllowAnimatedContent, .BeginFromCurrentState]
     public let animationDuration: NSTimeInterval = 0.3
     
     internal var action: PullToRefreshAction = {}
@@ -71,7 +71,7 @@ public class PullToRefreshView: UIView {
 //        super.init()
 //    }
     
-    public required init(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -100,7 +100,7 @@ public class PullToRefreshView: UIView {
     }
     
     // MARK: - KVO method
-    public override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<()>) {
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if context == &KVOContext && keyPath == ContentOffsetKeyPath && object as? UIView == superview {
             if let scrollView = object as? UIScrollView {
 //                println("Refresher: y content offset: \(scrollView.contentOffset.y)")
