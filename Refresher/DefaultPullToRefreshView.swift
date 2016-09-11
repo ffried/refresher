@@ -25,44 +25,44 @@ import Foundation
 import UIKit
 import QuartzCore
 
-public class DefaultPullToRefreshView: PullToRefreshView {
+open class DefaultPullToRefreshView: PullToRefreshView {
     
-    public let labelTitle: UILabel = {
+    open let labelTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .Center
+        label.textAlignment = .center
         return label
         }()
     
     private let layerLoader: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.lineWidth = 4.0
-        layer.strokeColor = UIColor(red: 0.0, green: 0.48, blue: 1.0, alpha: 1.0).CGColor
+        layer.strokeColor = UIColor(red: 0.0, green: 0.48, blue: 1.0, alpha: 1.0).cgColor
         layer.strokeEnd = 0.0
         return layer
         }()
     private let layerSeparator: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.lineWidth = 1.0
-        layer.strokeColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0).CGColor
+        layer.strokeColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0).cgColor
         return layer
         }()
     
-    public var pullToRefreshText = NSLocalizedString("Pull to refresh", comment: "Refresher")
-    public var loadingText = NSLocalizedString("Loading ...", comment: "Refresher")
-    public var releaseToRefreshText = NSLocalizedString("Release to refresh", comment: "Refresher")
+    open var pullToRefreshText = NSLocalizedString("Pull to refresh", comment: "Refresher")
+    open var loadingText = NSLocalizedString("Loading ...", comment: "Refresher")
+    open var releaseToRefreshText = NSLocalizedString("Release to refresh", comment: "Refresher")
     
-    public override func initialize() {
+    open override func initialize() {
         super.initialize()
         
         addSubview(labelTitle)
         let views = ["labelTitle": labelTitle]
         let formats = ["H:|-(>=10)-[labelTitle]-(>=10)-|", "V:|-(>=15,==15@500)-[labelTitle]-(>=15,==15@500)-|"]
         let constraints = formats.reduce([NSLayoutConstraint]()) { constraints, format in
-            return constraints + NSLayoutConstraint.constraintsWithVisualFormat(format, options: [], metrics: nil, views: views)
+            return constraints + NSLayoutConstraint.constraints(withVisualFormat: format, options: [], metrics: nil, views: views)
             } + [
-                NSLayoutConstraint(item: labelTitle, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: labelTitle, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1.0, constant: 0.0)
+                NSLayoutConstraint(item: labelTitle, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: labelTitle, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: 0.0)
         ]
         addConstraints(constraints)
         
@@ -70,34 +70,34 @@ public class DefaultPullToRefreshView: PullToRefreshView {
         layer.addSublayer(layerLoader)
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         
         let bezierPathLoader = UIBezierPath()
-        bezierPathLoader.moveToPoint(CGPoint(x: 0.0, y: frame.height - layerLoader.lineWidth))
-        bezierPathLoader.addLineToPoint(CGPoint(x: frame.width, y: frame.height - layerLoader.lineWidth))
-        layerLoader.path = bezierPathLoader.CGPath
+        bezierPathLoader.move(to: CGPoint(x: 0.0, y: frame.height - layerLoader.lineWidth))
+        bezierPathLoader.addLine(to: CGPoint(x: frame.width, y: frame.height - layerLoader.lineWidth))
+        layerLoader.path = bezierPathLoader.cgPath
         
         let bezierPathSeparator = UIBezierPath()
-        bezierPathSeparator.moveToPoint(CGPoint(x: 0.0, y: frame.height - layerSeparator.lineWidth))
-        bezierPathSeparator.addLineToPoint(CGPoint(x: frame.width, y: frame.height - layerSeparator.lineWidth))
-        layerSeparator.path = bezierPathSeparator.CGPath
+        bezierPathSeparator.move(to: CGPoint(x: 0.0, y: frame.height - layerSeparator.lineWidth))
+        bezierPathSeparator.addLine(to: CGPoint(x: frame.width, y: frame.height - layerSeparator.lineWidth))
+        layerSeparator.path = bezierPathSeparator.cgPath
     }
     
     // MARK: - PullToRefreshView methods
-    public override func stateChanged(previousState: State) {
+    open override func stateChanged(_ previousState: State) {
         super.stateChanged(previousState)
         switch state {
-        case .Pulling:
+        case .pulling:
             labelTitle.text = pullToRefreshText
-        case .ReadyToRelease:
+        case .readyToRelease:
             labelTitle.text = releaseToRefreshText
-        case .Refreshing:
+        case .refreshing:
             labelTitle.text = loadingText
         }
     }
     
-    public override func startAnimating() {
+    open override func startAnimating() {
         super.startAnimating()
         let pathAnimationEnd = CABasicAnimation(keyPath: "strokeEnd")
         pathAnimationEnd.duration = 0.5
@@ -105,7 +105,7 @@ public class DefaultPullToRefreshView: PullToRefreshView {
         pathAnimationEnd.autoreverses = true
         pathAnimationEnd.fromValue = 0.2
         pathAnimationEnd.toValue = 1.0
-        layerLoader.addAnimation(pathAnimationEnd, forKey: "strokeEndAnimation")
+        layerLoader.add(pathAnimationEnd, forKey: "strokeEndAnimation")
         
         let pathAnimationStart = CABasicAnimation(keyPath: "strokeStart")
         pathAnimationStart.duration = 0.5
@@ -113,15 +113,15 @@ public class DefaultPullToRefreshView: PullToRefreshView {
         pathAnimationStart.autoreverses = true
         pathAnimationStart.fromValue = 0.0
         pathAnimationStart.toValue = 0.8
-        layerLoader.addAnimation(pathAnimationStart, forKey: "strokeStartAnimation")
+        layerLoader.add(pathAnimationStart, forKey: "strokeStartAnimation")
     }
     
-    public override func changeProgress(progress: CGFloat) {
+    open override func changeProgress(_ progress: CGFloat) {
         super.changeProgress(progress)
         layerLoader.strokeEnd = progress
     }
     
-    public override func stopAnimating() {
+    open override func stopAnimating() {
         super.stopAnimating()
         layerLoader.removeAllAnimations()
     }

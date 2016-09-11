@@ -41,10 +41,10 @@ extension UIScrollView {
                 view.translatesAutoresizingMaskIntoConstraints = false
                 addSubview(view)
                 let constraints = [
-                    NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: 0.0),
-                    NSLayoutConstraint(item: view, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 0.0),
-                    NSLayoutConstraint(item: view, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1.0, constant: 0.0),
-                    NSLayoutConstraint(item: view, attribute: .Width, relatedBy: .Equal, toItem: self, attribute: .Width, multiplier: 1.0, constant: 0.0)
+                    NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0),
+                    NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0.0),
+                    NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: 0.0),
+                    NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1.0, constant: 0.0)
                 ]
                 addConstraints(constraints)
             }
@@ -56,7 +56,7 @@ extension UIScrollView {
     
     // If you want to add pull to refresh functionality to your UIScrollView just call this method and pass action closure you want to execute while pull to refresh is animating. If you want to stop pull to refresh you must do that manually calling stopPullToRefreshView methods on your scroll view
     // If you want to use your custom view, pass your own PullToRefreshView subclass here.
-    public func addPullToRefreshWithAction(view: PullToRefreshView = DefaultPullToRefreshView(), action: PullToRefreshView.PullToRefreshAction) {
+    public func addPullToRefreshWithAction(_ view: PullToRefreshView = DefaultPullToRefreshView(), action: @escaping PullToRefreshView.PullToRefreshAction) {
         view.action = action
         pullToRefreshView = view
     }
